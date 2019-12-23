@@ -319,7 +319,6 @@ module.exports = function(RED) {
 		service.SendMessage=function(svc,msg,cb){
 			var params={};
 			//copyArgs
-			
 			copyArg(n,"QueueUrl",params,undefined,false); 
 			copyArg(n,"MessageBody",params,undefined,false); 
 			
@@ -327,10 +326,11 @@ module.exports = function(RED) {
 			copyArg(msg,"MessageBody",params,undefined,false); 
 			copyArg(msg,"DelaySeconds",params,undefined,false); 
 			copyArg(msg,"MessageAttributes",params,undefined,true); 
-			copyArg(msg,"MessageDeduplicationId",params,undefined,false); 
-			copyArg(msg,"MessageGroupId",params,undefined,false); 
 			
-
+			
+			if (msg.MessageGroupId) copyArg(msg,"MessageGroupId",params,undefined,false);
+			if (msg.MessageDeduplicationId) copyArg(msg,"MessageDeduplicationId",params,undefined,false);
+			
 			svc.sendMessage(params,cb);
 		}
 
